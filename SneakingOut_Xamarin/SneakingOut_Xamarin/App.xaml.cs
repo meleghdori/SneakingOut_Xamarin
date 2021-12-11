@@ -1,5 +1,4 @@
-﻿using SneakingOut_Xamarin.Services;
-using SneakingOut_Xamarin.View;
+﻿using SneakingOut_Xamarin.View;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -83,10 +82,8 @@ namespace SneakingOut_Xamarin
 
         protected override void OnStart()
         {
-            _SneakingOutGameModel.NewGame();
-            _SneakingOutViewModel.RefreshTable();
             _advanceTimer = true; // egy logikai értékkel szabályozzuk az időzítőt
-            Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; }); // elindítjuk az időzítőt
+         //   Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; }); // elindítjuk az időzítőt
         }
 
         protected override void OnSleep()
@@ -124,9 +121,11 @@ namespace SneakingOut_Xamarin
         /// <summary>
         /// Új játék indításának eseménykezelője.
         /// </summary>
-        private void SneakingOutViewModel_Level1(object sender, EventArgs e)
+        private async void SneakingOutViewModel_Level1(object sender, EventArgs e)
         {
             _SneakingOutGameModel.NewGame();
+            await _SneakingOutGameModel.LoadGameAsync(@"C:\Digitalis oktatas\2021-2\eva\SneakingOut_Xamarin\SneakingOut_Xamarin\SneakingOut_Xamarin\level1.txt");
+            _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level1;
 
             if (!_advanceTimer)
@@ -143,6 +142,7 @@ namespace SneakingOut_Xamarin
         private void SneakingOutViewModel_Level2(object sender, EventArgs e)
         {
             _SneakingOutGameModel.NewGame();
+            _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level2;
 
             if (!_advanceTimer)
@@ -159,6 +159,7 @@ namespace SneakingOut_Xamarin
         private void SneakingOutViewModel_Level3(object sender, EventArgs e)
         {
             _SneakingOutGameModel.NewGame();
+            _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level3;
             if (!_advanceTimer)
             {

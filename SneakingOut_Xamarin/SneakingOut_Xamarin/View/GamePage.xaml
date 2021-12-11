@@ -14,10 +14,10 @@
       </Style>
       <Style x:Key="MainButtonStyle" TargetType="Button">
         <Setter Property="FontSize" Value="Micro" />
-        <Setter Property="BackgroundColor" Value="Blue" />
+        <Setter Property="BackgroundColor" Value="White" />
         <Setter Property="BorderRadius" Value="0" />
         <Setter Property="BorderWidth" Value="0" />
-        <Setter Property="BorderColor" Value="Blue" />
+        <Setter Property="BorderColor" Value="LightBlue" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="HeightRequest" Value="30" />
       </Style>

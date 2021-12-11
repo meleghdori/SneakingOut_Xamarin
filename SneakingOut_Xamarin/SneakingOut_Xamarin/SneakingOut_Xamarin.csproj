@@ -28,4 +28,8 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SneakingOut.Android\" />
+  </ItemGroup>
 </Project>
