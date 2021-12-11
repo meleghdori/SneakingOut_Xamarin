@@ -115,11 +115,11 @@ namespace SneakingOut_Xamarin.ViewModel
         /// <summary>
         /// jatekos iranyatasanak esemenyei
         /// </summary>
-        public event EventHandler UpKeyDown;
+        /*public event EventHandler UpKeyDown;
         public event EventHandler DownKeyDown;
         public event EventHandler RightKeyDown;
         public event EventHandler LeftKeyDown;
-
+        */
 
 
         #endregion
@@ -146,11 +146,11 @@ namespace SneakingOut_Xamarin.ViewModel
             Level3Command = new DelegateCommand(param => OnLevel3());
             SaveGameCommand = new DelegateCommand(param => OnSaveGame());
             ExitCommand = new DelegateCommand(param => OnExitGame());
-            UpKeyDownCommand = new DelegateCommand(param => OnUpKeyDown());
+            /*UpKeyDownCommand = new DelegateCommand(param => OnUpKeyDown());
             DownKeyDownCommand = new DelegateCommand(param => OnDownKeyDown());
             LeftKeyDownCommand = new DelegateCommand(param => OnLeftKeyDown());
             RightKeyDownCommand = new DelegateCommand(param => OnRightKeyDown());
-
+            */
 
 
             // játéktábla létrehozása
@@ -350,7 +350,7 @@ namespace SneakingOut_Xamarin.ViewModel
                 ExitGame(this, EventArgs.Empty);
         }
 
-        private void OnUpKeyDown()
+        /*private void OnUpKeyDown()
         {
             if (UpKeyDown != null)
                 UpKeyDown(this, EventArgs.Empty);
@@ -372,7 +372,7 @@ namespace SneakingOut_Xamarin.ViewModel
         {
             if(LeftKeyDown != null)
                 LeftKeyDown(this, EventArgs.Empty);
-        }
+        }*/
 
         #endregion
 

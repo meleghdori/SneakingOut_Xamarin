@@ -43,21 +43,9 @@
 
     <!-- a nehézséget kapcsolók segítségével állítjuk -->
     <StackLayout Orientation="Vertical">
-      <Button Command="{Binding LoadGameCommand}" Text="Betöltés" Style="{StaticResource MainButtonStyle}" />
-      <Button Command="{Binding SaveGameCommand}" Text="Mentés" Style="{StaticResource MainButtonStyle}" />
-
-      <Label Text="Játéknehézség kiválasztása:" Style="{StaticResource MainLabelStyle}" />
-      <StackLayout Orientation="Horizontal">
-        <Switch IsToggled="{Binding IsGameEasy}" />
-        <Label Text="Easy" Style="{StaticResource MainLabelStyle}" />
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <Switch IsToggled="{Binding IsGameMedium}" />
-        <Label Text="Medium" Style="{StaticResource MainLabelStyle}" />
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <Switch IsToggled="{Binding IsGameHard}" />
-        <Label Text="Hard" Style="{StaticResource MainLabelStyle}" />
-      </StackLayout>
+       <Button Text="Pause" Command="{Binding PauseCommand}" Style="{StaticResource MainButtonStyle}" />
+       <Button Text="Restart" Command="{Binding RestartCommand}" Style="{StaticResource MainButtonStyle}" />
+       <Button Text="Save" Command="{Binding SaveGameCommand}" Style="{StaticResource MainButtonStyle}"/>
+       <Button Text="Exit" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" />
     </StackLayout>
 </ContentPage>

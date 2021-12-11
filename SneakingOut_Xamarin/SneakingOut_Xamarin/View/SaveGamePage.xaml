@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SneakingOut_Xamarin.View.SaveGamePage"
-             Title="Mentés">
+             Title="Save">
   <ContentPage.Resources>
     <ResourceDictionary>
       <Style x:Key="NameStyle" TargetType="Label">
@@ -18,7 +18,7 @@
 
   <StackLayout Orientation="Vertical">
     <Entry x:Name="saveNameEntry" />
-    <Button Text="Mentés" Command="{Binding NewSaveCommand}" CommandParameter="{Binding Source={x:Reference saveNameEntry}, Path=Text}" />
+    <Button Text="Save" Command="{Binding NewSaveCommand}" CommandParameter="{Binding Source={x:Reference saveNameEntry}, Path=Text}" />
     <!-- a fájlnevet a beviteli mezőtől vesszük át -->
 
     <ListView ItemsSource="{Binding StoredGames}">

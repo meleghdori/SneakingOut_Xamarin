@@ -4,7 +4,7 @@
              xmlns:view="clr-namespace:SneakingOut_Xamarin.View"
              xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              x:Class="SneakingOut_Xamarin.View.GamePage"
-             Title="Játék">
+             Title="Game">
   <ContentPage.Resources>
     <ResourceDictionary>
       <!-- stílusok a vezérlőknek -->
@@ -30,15 +30,30 @@
         <Setter Property="HeightRequest" Value="38" />
         <Style.Triggers>
           <!-- a színt a mező zárolása állítja be -->
-          <DataTrigger TargetType="Button" Binding="{Binding IsLocked}" Value="True">
-            <Setter Property="BackgroundColor" Value="Gray" />
+          <DataTrigger TargetType="Button" Binding="{Binding IsSecurity}" Value="True">
+            <Setter Property="BackgroundColor" Value="Yellow" />
             <Setter Property="TextColor" Value="White" />
             <Setter Property="BorderColor" Value="Gray" />
           </DataTrigger>
-          <DataTrigger TargetType="Button" Binding="{Binding IsLocked}" Value="False">
+            <DataTrigger TargetType="Button" Binding="{Binding IsPlayer}" Value="True">
+            <Setter Property="BackgroundColor" Value="Red" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BorderColor" Value="Gray" />
+          </DataTrigger>
+          <DataTrigger TargetType="Button" Binding="{Binding IsEmpty}" Value="True">
+            <Setter Property="BackgroundColor" Value="Black" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BorderColor" Value="Gray" />
+          </DataTrigger>
+          <DataTrigger TargetType="Button" Binding="{Binding IsWall}" Value="False">
             <Setter Property="BackgroundColor" Value="White" />
             <Setter Property="TextColor" Value="Black" />
             <Setter Property="BorderColor" Value="White" />
+          </DataTrigger>
+           <DataTrigger TargetType="Button" Binding="{Binding IsExit}" Value="True">
+            <Setter Property="BackgroundColor" Value="Green" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BorderColor" Value="Gray" />
           </DataTrigger>
         </Style.Triggers>
       </Style>
@@ -53,15 +68,18 @@
       </Grid.RowDefinitions>
 
       <!-- a gombokat a képernyő tetejére helyezzük -->
-      <Button Text="Új játék" Command="{Binding NewGameCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Start" />
+      <Button Text="Level 1" Command="{Binding Level1Command}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Start" />
+      <Button Text="Level 2" Command="{Binding Level2Command}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Center" />
+      <Button Text="Level 3" Command="{Binding Level2Command}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Center" />
       <Button Text="Beállítások" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="End" />
 
-      <controls:FlowListView Grid.Row="1" FlowColumnCount="9" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None">
+
+        <controls:FlowListView Grid.Row="1" FlowColumnCount="9" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None">
         <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
         <controls:FlowListView.FlowColumnTemplate>
           <DataTemplate>
             <!-- a rács elemei gombok lesznek -->
-            <Button Command="{Binding StepCommand}" CommandParameter="{Binding Number}" Text="{Binding Text}" Style="{StaticResource FieldStyle}" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Button Style="{StaticResource FieldStyle}" VerticalOptions="Center" HorizontalOptions="Center" />
           </DataTemplate>
         </controls:FlowListView.FlowColumnTemplate>
       </controls:FlowListView>
