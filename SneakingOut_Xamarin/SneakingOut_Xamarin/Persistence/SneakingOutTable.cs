@@ -66,7 +66,6 @@ namespace SneakingOut_Xamarin.Persistence
             _fieldValues = new Int32[tableSize, tableSize];
             Exit = new Int32[2];
             isEscaped = false;
-            SecurityTwo = new Security(9, 9);
 
         }
 

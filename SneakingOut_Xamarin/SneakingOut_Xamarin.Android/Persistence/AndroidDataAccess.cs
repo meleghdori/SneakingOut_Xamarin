@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Android.Content.Res;
 using SneakingOut_Xamarin.Droid.Persistence;
 using SneakingOut_Xamarin.Persistence;
 using Xamarin.Forms;
@@ -23,9 +24,20 @@ namespace SneakingOut_Xamarin.Droid.Persistence
             // a betöltés a személyen könyvtárból történik
             String filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), path);
 
+            AssetManager assets = Android.App.Application.Context.Assets;
+
+            String value;
+
             // a fájlmûveletet taszk segítségével végezzük (aszinkron módon)
-            String[] values = (await Task.Run(() => File.ReadAllText(filePath))).Split(' ');
-            
+            String[] values;
+            using (StreamReader sr = new StreamReader(assets.Open(path)))
+            {
+                value = sr.ReadToEnd();
+
+            }
+
+            values = value.Split(' ');
+
             Int32 tableSize = Int32.Parse(values[0]);
             SneakingOutTable table = new SneakingOutTable(tableSize); // létrehozzuk a táblát
 

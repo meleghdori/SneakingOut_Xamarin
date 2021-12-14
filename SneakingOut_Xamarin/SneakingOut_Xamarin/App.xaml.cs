@@ -23,9 +23,6 @@ namespace SneakingOut_Xamarin
         private SettingsPage _settingsPage;
 
         private IStore _store;
-        private StoredGameBrowserModel _storedGameBrowserModel;
-        private StoredGameBrowserViewModel _storedGameBrowserViewModel;
-        private LoadGamePage _loadGamePage;
         private SaveGamePage _saveGamePage;
 
         private Boolean _advanceTimer;
@@ -57,18 +54,7 @@ namespace SneakingOut_Xamarin
             _settingsPage = new SettingsPage();
             _settingsPage.BindingContext = _SneakingOutViewModel;
 
-            // a játékmentések kezelésének összeállítása
-            _store = DependencyService.Get<IStore>(); // a perzisztencia betöltése az adott platformon
-            _storedGameBrowserModel = new StoredGameBrowserModel(_store);
-            _storedGameBrowserViewModel = new StoredGameBrowserViewModel(_storedGameBrowserModel);
-            _storedGameBrowserViewModel.GameLoading += new EventHandler<StoredGameEventArgs>(StoredGameBrowserViewModel_GameLoading);
-            _storedGameBrowserViewModel.GameSaving += new EventHandler<StoredGameEventArgs>(StoredGameBrowserViewModel_GameSaving);
-
-            _loadGamePage = new LoadGamePage();
-            _loadGamePage.BindingContext = _storedGameBrowserViewModel;
-
             _saveGamePage = new SaveGamePage();
-            _saveGamePage.BindingContext = _storedGameBrowserViewModel;
 
             // nézet beállítása
             _mainPage = new NavigationPage(_gamePage); // egy navigációs lapot használunk fel a három nézet kezelésére
@@ -110,7 +96,7 @@ namespace SneakingOut_Xamarin
 
                     // csak akkor indul az időzítő, ha sikerült betölteni a játékot
                     _advanceTimer = true;
-                    Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
+                    Device.StartTimer(TimeSpan.FromSeconds(0.5), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
                 });
             }
             catch { }
@@ -126,7 +112,7 @@ namespace SneakingOut_Xamarin
             _SneakingOutGameModel.NewGame();
             try
             {
-                await _SneakingOutGameModel.LoadGameAsync(@"C:\Digitalis oktatas\2021-2\eva\SneakingOut_Xamarin\SneakingOut_Xamarin\SneakingOut_Xamarin\level1.txt");
+                await _SneakingOutGameModel.LoadGameAsync("level1.txt");
             }
             catch { }
             _gameLevel = GameLevel.Level1;
@@ -136,16 +122,21 @@ namespace SneakingOut_Xamarin
             {
                 // ha nem fut az időzítő, akkor elindítjuk
                 _advanceTimer = true;
-                Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
+                Device.StartTimer(TimeSpan.FromSeconds(0.5), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
             }
         }
 
         /// <summary>
         /// Új játék indításának eseménykezelője.
         /// </summary>
-        private void SneakingOutViewModel_Level2(object sender, EventArgs e)
+        private async void SneakingOutViewModel_Level2(object sender, EventArgs e)
         {
             _SneakingOutGameModel.NewGame();
+            try
+            {
+                await _SneakingOutGameModel.LoadGameAsync("level2.txt");
+            }
+            catch { }
             _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level2;
 
@@ -153,33 +144,29 @@ namespace SneakingOut_Xamarin
             {
                 // ha nem fut az időzítő, akkor elindítjuk
                 _advanceTimer = true;
-                Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
+                Device.StartTimer(TimeSpan.FromSeconds(0.5), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
             }
         }
 
         /// <summary>
         /// Új játék indításának eseménykezelője.
         /// </summary>
-        private void SneakingOutViewModel_Level3(object sender, EventArgs e)
+        private async void SneakingOutViewModel_Level3(object sender, EventArgs e)
         {
             _SneakingOutGameModel.NewGame();
+            try
+            {
+                await _SneakingOutGameModel.LoadGameAsync("level1.txt");
+            }
+            catch { }
             _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level3;
             if (!_advanceTimer)
             {
                 // ha nem fut az időzítő, akkor elindítjuk
                 _advanceTimer = true;
-                Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
+                Device.StartTimer(TimeSpan.FromSeconds(0.5), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
             }
-        }
-
-        /// <summary>
-        /// Játék betöltésének eseménykezelője.
-        /// </summary>
-        private async void SneakingOutViewModel_LoadGame(object sender, System.EventArgs e)
-        {
-            await _storedGameBrowserModel.UpdateAsync(); // frissítjük a tárolt játékok listáját
-            await _mainPage.PushAsync(_loadGamePage); // átnavigálunk a lapra
         }
 
         /// <summary>
@@ -187,7 +174,6 @@ namespace SneakingOut_Xamarin
         /// </summary>
         private async void SneakingOutViewModel_SaveGame(object sender, EventArgs e)
         {
-            await _storedGameBrowserModel.UpdateAsync(); // frissítjük a tárolt játékok listáját
             await _mainPage.PushAsync(_saveGamePage); // átnavigálunk a lapra
         }
 
@@ -223,47 +209,6 @@ namespace SneakingOut_Xamarin
             {
                 SneakingOutViewModel_Level3(sender, e);
             }
-        }
-
-        /// <summary>
-        /// Betöltés végrehajtásának eseménykezelője.
-        /// </summary>
-        private async void StoredGameBrowserViewModel_GameLoading(object sender, StoredGameEventArgs e)
-        {
-            await _mainPage.PopAsync(); // visszanavigálunk
-
-            // betöltjük az elmentett játékot, amennyiben van
-            try
-            {
-                await _SneakingOutGameModel.LoadGameAsync(e.Name);
-                _SneakingOutViewModel.RefreshTable();
-
-                // csak akkor indul az időzítő, ha sikerült betölteni a játékot
-                _advanceTimer = true;
-                Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
-            }
-            catch
-            {
-                await MainPage.DisplayAlert("Sneaking Out the game", "Failed to load!", "OK");
-            }
-        }
-
-        /// <summary>
-        /// Mentés végrehajtásának eseménykezelője.
-        /// </summary>
-        private async void StoredGameBrowserViewModel_GameSaving(object sender, StoredGameEventArgs e)
-        {
-            await _mainPage.PopAsync(); // visszanavigálunk
-            _advanceTimer = false;
-
-            try
-            {
-                // elmentjük a játékot
-                await _SneakingOutGameModel.SaveGameAsync(e.Name);
-            }
-            catch { }
-
-            await MainPage.DisplayAlert("Sneaking Out the game", "Game successfully saved!", "OK");
         }
 
         #endregion

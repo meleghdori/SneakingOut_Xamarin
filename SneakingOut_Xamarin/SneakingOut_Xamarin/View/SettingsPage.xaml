@@ -26,12 +26,12 @@
         <Setter Property="HeightRequest" Value="38" />
         <Style.Triggers>
           <!-- a színt a mező zárolása állítja be -->
-          <DataTrigger TargetType="Button" Binding="{Binding IsLocked}" Value="True">
+          <DataTrigger TargetType="Button" Binding="{Binding IsEmpty}" Value="True">
             <Setter Property="BackgroundColor" Value="Gray" />
             <Setter Property="TextColor" Value="White" />
             <Setter Property="BorderColor" Value="Gray" />
           </DataTrigger>
-          <DataTrigger TargetType="Button" Binding="{Binding IsLocked}" Value="False">
+          <DataTrigger TargetType="Button" Binding="{Binding IsEmpty}" Value="False">
             <Setter Property="BackgroundColor" Value="White" />
             <Setter Property="TextColor" Value="Black" />
             <Setter Property="BorderColor" Value="White" />

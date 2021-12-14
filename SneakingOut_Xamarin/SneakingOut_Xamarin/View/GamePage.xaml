@@ -44,9 +44,9 @@
             <Setter Property="TextColor" Value="White" />
             <Setter Property="BorderColor" Value="Gray" />
           </DataTrigger>
-          <DataTrigger TargetType="Button" Binding="{Binding IsWall}" Value="False">
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="TextColor" Value="Black" />
+          <DataTrigger TargetType="Button" Binding="{Binding IsWall}" Value="True">
+            <Setter Property="BackgroundColor" Value="Gray" />
+            <Setter Property="TextColor" Value="White" />
             <Setter Property="BorderColor" Value="White" />
           </DataTrigger>
            <DataTrigger TargetType="Button" Binding="{Binding IsExit}" Value="True">
@@ -73,7 +73,7 @@
       <Button Text="Game" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="End" />
 
 
-        <controls:FlowListView Grid.Row="1" FlowColumnCount="9" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None">
+        <controls:FlowListView Grid.Row="1" FlowColumnCount="10" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None">
         <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
         <controls:FlowListView.FlowColumnTemplate>
           <DataTemplate>
