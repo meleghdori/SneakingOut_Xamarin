@@ -26,10 +26,9 @@
         <Setter Property="Margin" Value="1" />
         <Setter Property="BorderRadius" Value="0" />
         <Setter Property="BorderWidth" Value="0" />
-        <Setter Property="WidthRequest" Value="38" />
-        <Setter Property="HeightRequest" Value="38" />
+        <Setter Property="WidthRequest" Value="30" />
+        <Setter Property="HeightRequest" Value="30" />
         <Style.Triggers>
-          <!-- a színt a mező zárolása állítja be -->
           <DataTrigger TargetType="Button" Binding="{Binding IsSecurity}" Value="True">
             <Setter Property="BackgroundColor" Value="Yellow" />
             <Setter Property="TextColor" Value="White" />
@@ -71,7 +70,7 @@
       <Button Text="Level 1" Command="{Binding Level1Command}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Start" />
       <Button Text="Level 2" Command="{Binding Level2Command}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Center" />
       <Button Text="Level 3" Command="{Binding Level2Command}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="Center" />
-      <Button Text="Beállítások" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="End" />
+      <Button Text="Game" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" HorizontalOptions="End" />
 
 
         <controls:FlowListView Grid.Row="1" FlowColumnCount="9" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None">

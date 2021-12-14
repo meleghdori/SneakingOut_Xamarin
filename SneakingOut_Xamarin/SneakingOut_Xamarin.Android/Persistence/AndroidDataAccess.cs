@@ -27,10 +27,9 @@ namespace SneakingOut_Xamarin.Droid.Persistence
             String[] values = (await Task.Run(() => File.ReadAllText(filePath))).Split(' ');
             
             Int32 tableSize = Int32.Parse(values[0]);
-            Int32 regionSize = Int32.Parse(values[1]);
             SneakingOutTable table = new SneakingOutTable(tableSize); // létrehozzuk a táblát
 
-            Int32 valueIndex = 2;
+            Int32 valueIndex = 1;
             for (Int32 rowIndex = 0; rowIndex < tableSize; rowIndex++)
             {              
                 for (Int32 columnIndex = 0; columnIndex < tableSize; columnIndex++)

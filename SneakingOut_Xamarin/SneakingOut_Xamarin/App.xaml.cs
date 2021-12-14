@@ -82,7 +82,7 @@ namespace SneakingOut_Xamarin
 
         protected override void OnStart()
         {
-            _advanceTimer = true; // egy logikai értékkel szabályozzuk az időzítőt
+            _advanceTimer = false; // egy logikai értékkel szabályozzuk az időzítőt
          //   Device.StartTimer(TimeSpan.FromSeconds(1), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; }); // elindítjuk az időzítőt
         }
 
@@ -124,9 +124,13 @@ namespace SneakingOut_Xamarin
         private async void SneakingOutViewModel_Level1(object sender, EventArgs e)
         {
             _SneakingOutGameModel.NewGame();
-            await _SneakingOutGameModel.LoadGameAsync(@"C:\Digitalis oktatas\2021-2\eva\SneakingOut_Xamarin\SneakingOut_Xamarin\SneakingOut_Xamarin\level1.txt");
-            _SneakingOutViewModel.RefreshTable();
+            try
+            {
+                await _SneakingOutGameModel.LoadGameAsync(@"C:\Digitalis oktatas\2021-2\eva\SneakingOut_Xamarin\SneakingOut_Xamarin\SneakingOut_Xamarin\level1.txt");
+            }
+            catch { }
             _gameLevel = GameLevel.Level1;
+            _SneakingOutViewModel.RefreshTable();
 
             if (!_advanceTimer)
             {
