@@ -33,7 +33,6 @@ namespace SneakingOut_Xamarin.Droid.Persistence
             using (StreamReader sr = new StreamReader(assets.Open(path)))
             {
                 value = sr.ReadToEnd();
-
             }
 
             values = value.Split(' ');

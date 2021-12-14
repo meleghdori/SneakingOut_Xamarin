@@ -44,8 +44,6 @@
     <!-- a nehézséget kapcsolók segítségével állítjuk -->
     <StackLayout Orientation="Vertical">
        <Button Text="Pause" Command="{Binding PauseCommand}" Style="{StaticResource MainButtonStyle}" />
-       <Button Text="Restart" Command="{Binding RestartCommand}" Style="{StaticResource MainButtonStyle}" />
-       <Button Text="Save" Command="{Binding SaveGameCommand}" Style="{StaticResource MainButtonStyle}"/>
-       <Button Text="Exit" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" />
+        <Button Text="Restart" Command="{Binding RestartCommand}" Style="{StaticResource MainButtonStyle}" />
     </StackLayout>
 </ContentPage>
