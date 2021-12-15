@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Persistence\AndroidDataAccess.cs" />
-    <Compile Include="Persistence\AndroidStore.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

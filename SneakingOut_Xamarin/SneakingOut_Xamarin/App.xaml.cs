@@ -20,9 +20,6 @@ namespace SneakingOut_Xamarin
         private SneakingOutGameModel _SneakingOutGameModel;
         private SneakingOutViewModel _SneakingOutViewModel;
         private GamePage _gamePage;
-        private SettingsPage _settingsPage;
-
-        private IStore _store;
 
         private Boolean _advanceTimer;
         private NavigationPage _mainPage;
@@ -39,7 +36,6 @@ namespace SneakingOut_Xamarin
             _SneakingOutGameModel.GameOver += new EventHandler<SneakingOutEventArgs>(SneakingOutGameModel_GameOver);
 
             _SneakingOutViewModel = new SneakingOutViewModel(_SneakingOutGameModel);
-            _SneakingOutViewModel.ExitGame += new EventHandler(SneakingOutViewModel_ExitGame);
             _SneakingOutViewModel.Level1 += new EventHandler(SneakingOutViewModel_Level1);
             _SneakingOutViewModel.Level2 += new EventHandler(SneakingOutViewModel_Level2);
             _SneakingOutViewModel.Level3 += new EventHandler(SneakingOutViewModel_Level3);
@@ -53,15 +49,13 @@ namespace SneakingOut_Xamarin
             _gamePage = new GamePage();
             _gamePage.BindingContext = _SneakingOutViewModel;
 
-            _settingsPage = new SettingsPage();
-            _settingsPage.BindingContext = _SneakingOutViewModel;
 
             // nézet beállítása
             _mainPage = new NavigationPage(_gamePage); // egy navigációs lapot használunk fel a három nézet kezelésére
 
             MainPage = _mainPage;
 
-            isPaused = true;
+            isPaused = false;
         }
 
         
@@ -69,36 +63,6 @@ namespace SneakingOut_Xamarin
         protected override void OnStart()
         {
             _advanceTimer = false; // egy logikai értékkel szabályozzuk az időzítőt
-        }
-
-        protected override void OnSleep()
-        {
-            _advanceTimer = false;
-
-            // elmentjük a jelenleg folyó játékot
-            try
-            {
-                Task.Run(async () => await _SneakingOutGameModel.SaveGameAsync("SuspendedGame"));
-            }
-            catch { }
-        }
-
-        protected override void OnResume()
-        {
-            // betöltjük a felfüggesztett játékot, amennyiben van
-            try
-            {
-                Task.Run(async () =>
-                {
-                    await _SneakingOutGameModel.LoadGameAsync("SuspendedGame");
-                    _SneakingOutViewModel.RefreshTable();
-
-                    // csak akkor indul az időzítő, ha sikerült betölteni a játékot
-                    _advanceTimer = true;
-                    Device.StartTimer(TimeSpan.FromSeconds(0.5), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
-                });
-            }
-            catch { }
         }
 
         #region ViewModel event handlers
@@ -148,7 +112,7 @@ namespace SneakingOut_Xamarin
             _gameLevel = GameLevel.Level1;
             _SneakingOutViewModel.RefreshTable();
 
-            if (!_advanceTimer)
+            if (!_advanceTimer || !isPaused)
             {
                 // ha nem fut az időzítő, akkor elindítjuk
                 _advanceTimer = true;
@@ -171,7 +135,7 @@ namespace SneakingOut_Xamarin
             _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level2;
 
-            if (!_advanceTimer)
+            if (!_advanceTimer || !isPaused)
             {
                 // ha nem fut az időzítő, akkor elindítjuk
                 _advanceTimer = true;
@@ -193,7 +157,7 @@ namespace SneakingOut_Xamarin
             catch { }
             _SneakingOutViewModel.RefreshTable();
             _gameLevel = GameLevel.Level3;
-            if (!_advanceTimer)
+            if (!_advanceTimer || !isPaused)
             {
                 // ha nem fut az időzítő, akkor elindítjuk
                 _advanceTimer = true;
@@ -202,21 +166,19 @@ namespace SneakingOut_Xamarin
             }
         }
 
-        private async void SneakingOutViewModel_ExitGame(object sender, EventArgs e)
-        {
-            await _mainPage.PushAsync(_settingsPage); // átnavigálunk a beállítások lapra
-        }
-
         private void SneakingOutViewModel_PauseGame(object sender, EventArgs e)
         {
             if (!isPaused)
             {
+                _advanceTimer = false;
                 isPaused = true;
-                
+                Device.StartTimer(TimeSpan.FromSeconds(0), () => { return _advanceTimer; });
             }
             else if (isPaused)
             {
+                _advanceTimer = true;
                 isPaused = false;
+                Device.StartTimer(TimeSpan.FromSeconds(0.5), () => { _SneakingOutGameModel.AdvanceTime(); return _advanceTimer; });
             }
         }
 
