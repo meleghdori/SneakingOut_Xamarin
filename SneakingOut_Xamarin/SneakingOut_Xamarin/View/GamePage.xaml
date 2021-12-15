@@ -14,7 +14,7 @@
       </Style>
       <Style x:Key="MainButtonStyle" TargetType="Button">
         <Setter Property="FontSize" Value="Micro" />
-        <Setter Property="BackgroundColor" Value="PeachPuff" />
+        <Setter Property="BackgroundColor" Value="#FF5677" />
         <Setter Property="BorderRadius" Value="0" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="BorderColor" Value="LightBlue" />
@@ -30,29 +30,19 @@
         <Setter Property="HeightRequest" Value="27" />
         <Style.Triggers>
           <DataTrigger TargetType="Button" Binding="{Binding IsSecurity}" Value="True">
-            <Setter Property="BackgroundColor" Value="DarkTurquoise" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="BorderColor" Value="Gray" />
+                        <Setter Property="BackgroundColor" Value="#99DDCC" />
           </DataTrigger>
             <DataTrigger TargetType="Button" Binding="{Binding IsPlayer}" Value="True">
-            <Setter Property="BackgroundColor" Value="MediumPurple" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="BorderColor" Value="Gray" />
+              <Setter Property="BackgroundColor" Value="#FF5677" />
           </DataTrigger>
           <DataTrigger TargetType="Button" Binding="{Binding IsEmpty}" Value="True">
-            <Setter Property="BackgroundColor" Value="LightPink" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="BorderColor" Value="Gray" />
+                        <Setter Property="BackgroundColor" Value="#B958A5" />
           </DataTrigger>
           <DataTrigger TargetType="Button" Binding="{Binding IsWall}" Value="True">
-            <Setter Property="BackgroundColor" Value="Coral" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="BorderColor" Value="White" />
+                        <Setter Property="BackgroundColor" Value="#4C3F91" />
           </DataTrigger>
            <DataTrigger TargetType="Button" Binding="{Binding IsExit}" Value="True">
-            <Setter Property="BackgroundColor" Value="LightGreen" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="BorderColor" Value="Gray" />
+            <Setter Property="BackgroundColor" Value="PeachPuff" />
           </DataTrigger>
         </Style.Triggers>
       </Style>
